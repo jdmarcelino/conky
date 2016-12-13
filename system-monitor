@@ -1,0 +1,114 @@
+background yes
+double_buffer yes
+alignment top_right
+border_width 0
+cpu_avg_samples 0.5
+default_color white
+default_outline_color white
+default_shade_color white
+draw_borders no
+draw_graph_borders no
+draw_outline no
+draw_shades no
+temperature_unit celsius
+gap_x 0
+gap_y 50
+net_avg_samples 0.5
+no_buffers yes
+out_to_console no
+out_to_stderr no
+extra_newline no
+own_window yes
+own_window_type normal
+own_window_transparent yes
+own_window_colour 000000
+own_window_argb_visual yes
+own_window_argb_value 0
+own_window_hints undecorated,below,sticky,skip_taskbar,skip_pager
+minimum_size 1 1
+stippled_borders 0
+update_interval 0.4
+uppercase no
+use_spacer none
+show_graph_scale no
+show_graph_range no
+use_xft yes
+xftalpha 1
+xftfont Droid Sans:size=10
+color0 white
+color1 EAEAEA
+color2 FFA300
+color3 grey
+# Defining colors
+default_color FFFFFF
+default_outline_color white
+default_shade_color white
+# Shades of Gray
+color1 EAEAEA
+color2 595959
+color3 grey
+# Orange
+color4 9b9b9b
+# Green
+color5 636363
+
+# Loading lua script for drawning rings
+lua_load ./seamod_rings.lua
+lua_draw_hook_post main
+
+## System information using conky capabilities
+
+# Header with base system info
+own_window_argb_value 0
+own_window_colour 000000
+TEXT
+
+
+${alignc}${color4}System Mainstream
+#${hr 2}
+${alignc}${offset 15}${color1}$sysname $kernel, running since $uptime
+${alignc}${offset 15}${color1} Internet access is $color4${execi 1 upordown.sh 8.8.8.8} $color1 over $color4${wireless_essid wlan0} $color1 through $color4${gw_iface} $color1 at $color4${wireless_link_qual_perc wlan0}%
+${alignc}${offset 15}${color1}CPU:$color4${hwmon 1 temp 2}°C   ${color1}Case:$color4${hwmon 1 temp 1}°C   ${color1}NB:$color4${hwmon 1 temp 3}°C
+# Showing CPU Graph
+
+
+
+${voffset -30}${offset 200}${cpugraph 40, 150 ffffff bbbbbb}${voffset -25}
+
+#${offset 150}${color5}CPU
+# Showing TOP 5 CPU-consumers
+
+
+${offset 80}${color4}${top name 1}${alignr}${top cpu 1}%
+${offset 80}${color1}${top name 2}${alignr}${top cpu 2}%
+${offset 80}${color2}${top name 3}${alignr}${top cpu 3}%
+${offset 80}${color3}${top name 4}${alignr}${top cpu 4}%
+${offset 80}${color3}${top name 5}${alignr}${top cpu 5}%
+#Showing memory part with TOP 5
+
+
+${voffset -30}${offset 200}${memgraph 80, 100 ffffff bbbbbb}${voffset -25}
+${voffset 20}
+#${offset 150}${color5}MEM
+${offset 80}${color4}${top_mem name 1}${alignr}${top_mem mem 1}%
+${offset 80}${color1}${top_mem name 2}${alignr}${top_mem mem 2}%
+${offset 80}${color2}${top_mem name 3}${alignr}${top_mem mem 3}%
+${offset 80}${color3}${top_mem name 4}${alignr}${top_mem mem 4}%
+${offset 80}${color3}${top_mem name 4}${alignr}${top_mem mem 5}%
+# Showing disk partitions: root, home and Data
+${voffset 40}
+#${offset 150}${color5}DISKS
+${offset 120}${diskiograph 40,100 ffffff ffffff}${voffset -20}
+${voffset 20}
+${offset 140}${font Droid Sans:size=9}${color1}Free: ${font Droid Sans:size=9}${fs_free /}${alignr}${font Droid Sans:size=9}Used: ${font Droid Sans:size=9}${fs_used /}
+${offset 140}${font Droid Sans:size=9}${color1}Free: ${font Droid Sans:size=9}${fs_free /home}${alignr}${font Droid Sans:size=9}Used: ${font Droid Sans:size=9}${fs_used /home}
+#${offset 140}${font Droid Sans:size=9}${color1}Free: ${font Droid Sans:size=9}${fs_free /home/juliano/MegaSeguro}${alignr}${font Droid Sans:size=9}Used: ${font Droid Sans:size=9}${fs_used /home/juliano/MegaSeguro}
+# Network data (my desktop have only LAN). ETHERNET ring is mostly useless but looks pretty, main info is in the graphs
+${voffset 80}
+#${offset 150}${color5}NETWORK
+#${voffset 40}
+${offset 120}${color1}${font Droid Sans:size=9}Up: ${alignr}${font Droid Sans:size=9}$color2${upspeed wlan0} / ${totalup}
+${offset 120}${upspeedgraph wlan0 40,285 ffffff ffffff 100 -t -l}
+${offset 120}${color1}${font Droid Sans:size=9}Down: ${alignr}${font Droid Sans:size=9}$color2${downspeed wlan0} / ${totaldown}
+${offset 120}${downspeedgraph wlan0 40,285 ffffff ffffff 100 -t -l}
+#${color4}${hr 2}
